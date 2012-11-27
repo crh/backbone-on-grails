@@ -3,6 +3,17 @@ backbone.js on grails
 
 a prototype to show case how to integrate backbone.js on grails.
 
+requirement
+-----------
+
+* grails v.2.1.1
+
+how to run
+----------
+1. `grails -Dserver.port=4000 run-app`
+2. open `http://localhost:4000/` in a modern web browser
+
+
 thanks
 ------
 
