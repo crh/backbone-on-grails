@@ -1,0 +1,1 @@
+<mustache:render model="[title: "this not the title"]" href="templates/book.mustache"/>
