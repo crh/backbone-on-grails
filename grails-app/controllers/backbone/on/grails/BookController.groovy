@@ -4,6 +4,7 @@ class BookController {
 
     def index() {
       def ninjaBook = new Book(title: "Secrets of JavaScript Ninja")
-      mustache.render(template:"bookTemplate", model:[title: ninjaBook.title])
+      // TODO: should we use this instead? 
+      //mustache.render(template:"bookTemplate", model:[title: ninjaBook.title])
     }
 }
