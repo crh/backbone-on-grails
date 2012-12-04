@@ -12,7 +12,6 @@ requirement
 how to run
 ----------
 
-  0 `gvm grails` [http://gvmtool.net/] <-- optional
   1. `grails -Dserver.port=4000 run-app
   2. open `http://localhost:4000/` in a modern web browser
 
