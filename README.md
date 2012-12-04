@@ -12,7 +12,7 @@ requirement
 how to run
 ----------
 
-  1. `grails -Dserver.port=4000 run-app
+  1. `grails -Dserver.port=4000 run-app`
   2. open `http://localhost:4000/` in a modern web browser
 
 thanks
