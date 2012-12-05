@@ -1,7 +1,7 @@
 modules = {
 
 	contact {
-		dependsOn 'jquery, underscore, backbone'
+		dependsOn 'jquery, underscore, backbone, mustache'
 
 		resource url: 'css/screen.css'
 		resource url: '/js/app.js'
@@ -14,6 +14,10 @@ modules = {
 
 	backbone {
 		resource url: '/js/vendor/backbone.js'
+	}
+
+	mustache {
+		resource url: '/js/vendor/mustache.js'
 	}
 
 }
