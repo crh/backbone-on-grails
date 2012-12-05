@@ -1,18 +1,42 @@
 /* global $:false, jQuery:false */
-
-/*
- * part 2: + filter basesd on user input. + routing
- */
-
 (function($) {
-  console.log('init book app');
-  
-  /*
-  _.templateSettings = {
-    interpolate : /\{\{(.+?)\}\}/g,
-    evaluate : /\{!(.+?)!\}/g
+  'use strict';
+  console.log('start backbone web app');
+
+  window.tpl = {
+    // Hash of preloaded templates for the app
+    templates: {},
+
+    // Recursively pre-load all the templates for the app.
+    // This implementation should be changed in a production environment:
+    // All the template files should be concatenated in a single file.
+    loadTemplates: function(names, callback) {
+
+      var that = this;
+
+      var loadTemplate = function(index) {
+          var name = names[index];
+          console.log('Loading template: ' + name);
+          $.get('templates/' + name + '.mustache', function(data) {
+              that.templates[name] = data;
+              index++;
+              if (index < names.length) {
+                  loadTemplate(index);
+              } else {
+                  callback();
+              }
+          });
+      };
+
+      loadTemplate(0);
+    },
+
+    // Get template by name from hash of preloaded templates
+    get: function(name) {
+      console.log('get template: ' + name)
+      return this.templates[name];
+    }
   };
-  */
 
   // le Model
   var Book = Backbone.Model.extend({
@@ -21,10 +45,9 @@
       author: 'no author'
     },
     initialize: function() {
-      console.log('init model ' + JSON.stringify(this));
+      console.log('create a book: ' + JSON.stringify(this));
     }
   });
-
 
   // le View
   var BookView = Backbone.View.extend({
@@ -37,30 +60,31 @@
       },
 
       initialize: function() {
-        console.log('view: ', this);
         console.log('model: ', this.model);
+        console.log('create the book view: ', this);
       },
-
-      detailsTemplate: $('#book-details-template').html(),
 
       details: function(e) {
         e.preventDefault();
+
         console.log('show details: ', e);
+
         $('.container').empty();
-        var html = Mustache.to_html(this.detailsTemplate, this.model.toJSON());
+
+        var template =  window.tpl.get('bookDetails');
+        var html = Mustache.to_html(template, this.model.toJSON());
         $('.container').html(html);
+
         window.appRouter.navigate('details');
       },
 
       render: function() {
         $('.container').append('You are seeing this, because your web browser supports JavaScript.');
         return this;
-      },
+      }
 
     });
 
-
-  // TODO add comments
   var AppRouter = Backbone.Router.extend({
     routes: {
       '': 'home',
@@ -74,16 +98,16 @@
     },
 
     details: function() {
-      // TODO: show details
+      //TODO: render the details view.
     }
   });
 
-  window.appRouter = new AppRouter();
-
   /*
-   * alternative, use Backbone pushState API. It needs configuration in the
-   * server though.
-   */
-  // Backbone history: supports back button, and bookmarking
-  Backbone.history.start();
+  preload a template with the name book stored in
+  `scripts/templates/book.html`
+  */
+  window.tpl.loadTemplates(['book', 'bookDetails'], function() {
+    window.appRouter = new AppRouter();
+    Backbone.history.start({pushState: true});
+  });
 }(jQuery));

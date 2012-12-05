@@ -14,12 +14,5 @@
       <g:include controller="book"/>
     </div>
     <footer></footer>
-    <script type="text/template" id="book-details-template">
-      <div class="book">
-        <span class="title">{{title}}</span>,
-        <span class="author">{{author}}<span>
-        <a class="less" href="../">less</a>
-      </div>
-    </script>
   </body>
 </html>

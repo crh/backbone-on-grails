@@ -15,6 +15,13 @@ how to run
   1. `grails -Dserver.port=4000 run-app`
   2. open `http://localhost:4000/` in a modern web browser
 
+how to deploy
+------------
+
+  1. `grails clean && grails war`
+  2. `scp target/${app-name}.war
+     usernam@hostname:${relative-path-to-web-container}`
+
 thanks
 ------
 
