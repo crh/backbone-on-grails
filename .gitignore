@@ -24,3 +24,6 @@ stacktrace.log
 */*.tmproj
 stacktrace.log
 test/reports
+
+# symbolic link
+app

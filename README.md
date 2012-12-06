@@ -1,10 +1,12 @@
 backbone.js on grails
 =====================
 
-a prototype to show case how to integrate backbone.js and mustache.js on grails.
+a prototype to show case how to integrate backbone.js and mustache.js on grails. It
+is also a proof of concept for delivering web app with progressive
+enhancement in mind.
 
-requirement
------------
+requirements
+------------
 
 * grails v.2.1.1
 * [grails mustache plugin](https://github.com/edvinasbartkus/grails-mustache)
@@ -13,7 +15,7 @@ how to run
 ----------
 
   1. `grails -Dserver.port=4000 run-app`
-  2. open `http://localhost:4000/` in a modern web browser
+  2. open `http://localhost:4000/` with a web browser
 
 how to deploy
 ------------

@@ -1,23 +1,28 @@
 modules = {
 
 	contact {
-		dependsOn 'jquery, underscore, backbone, mustache'
+		dependsOn 'jquery, lodash, backbone, mustache'
 
-		resource url: 'css/screen.css'
-		resource url: '/js/app.js'
+    // TODO: do we need to declare the style URL too?
+		resource url: '/scripts/main.js'
+
+    resource url: '/scripts/helpers/helper.js'
+    resource url: '/scripts/views/application-view.js'
+    resource url: '/scripts/models/application-model.js'
+    resource url: '/scripts/routes/application-router.js'
+
 	}
 
-
-	underscore {
-		resource url: '/js/vendor/underscore.js'
-	}
+  lodash {
+    resource url: '/scripts/vendor/lodash.min.js'
+  }
 
 	backbone {
-		resource url: '/js/vendor/backbone.js'
+		resource url: '/scripts/vendor/backbone-min.js'
 	}
 
 	mustache {
-		resource url: '/js/vendor/mustache.js'
+		resource url: '/components/mustache/mustache.js'
 	}
 
 }
