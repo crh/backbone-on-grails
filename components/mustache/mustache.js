@@ -20,7 +20,7 @@ var Mustache;
   var exports = {};
 
   exports.name = "mustache.js";
-  exports.version = "0.7.0";
+  exports.version = "0.7.1";
   exports.tags = ["{{", "}}"];
 
   exports.Scanner = Scanner;
@@ -193,39 +193,43 @@ var Mustache;
   };
 
   Writer.prototype.compile = function (template, tags) {
-    return this._compile(this._cache, template, template, tags);
+    var fn = this._cache[template];
+
+    if (!fn) {
+      var tokens = exports.parse(template, tags);
+      fn = this._cache[template] = this.compileTokens(tokens, template);
+    }
+
+    return fn;
   };
 
   Writer.prototype.compilePartial = function (name, template, tags) {
-    return this._compile(this._partialCache, name, template, tags);
+    var fn = this.compile(template, tags);
+    this._partialCache[name] = fn;
+    return fn;
+  };
+
+  Writer.prototype.compileTokens = function (tokens, template) {
+    var fn = compileTokens(tokens);
+    var self = this;
+
+    return function (view, partials) {
+      if (partials) {
+        if (typeof partials === "function") {
+          self._loadPartial = partials;
+        } else {
+          for (var name in partials) {
+            self.compilePartial(name, partials[name]);
+          }
+        }
+      }
+
+      return fn(self, Context.make(view), template);
+    };
   };
 
   Writer.prototype.render = function (template, view, partials) {
     return this.compile(template)(view, partials);
-  };
-
-  Writer.prototype._compile = function (cache, key, template, tags) {
-    if (!cache[key]) {
-      var tokens = exports.parse(template, tags);
-      var fn = compileTokens(tokens);
-
-      var self = this;
-      cache[key] = function (view, partials) {
-        if (partials) {
-          if (typeof partials === "function") {
-            self._loadPartial = partials;
-          } else {
-            for (var name in partials) {
-              self.compilePartial(name, partials[name]);
-            }
-          }
-        }
-
-        return fn(self, Context.make(view), template);
-      };
-    }
-
-    return cache[key];
   };
 
   Writer.prototype._section = function (name, context, text, callback) {
@@ -250,7 +254,8 @@ var Mustache;
         return self.render(template, context);
       };
 
-      return value.call(context.view, text, scopedRender) || "";
+      var result = value.call(context.view, text, scopedRender);
+      return result != null ? result : "";
     default:
       if (value) {
         return callback(this, context);
@@ -316,7 +321,7 @@ var Mustache;
 
   /**
    * Low-level function that compiles the given `tokens` into a function
-   * that accepts two arguments: a Context and a Writer.
+   * that accepts three arguments: a Writer, a Context, and the template.
    */
   function compileTokens(tokens) {
     var subRenders = {};
@@ -332,7 +337,7 @@ var Mustache;
       return subRenders[i];
     }
 
-    function renderFunction(writer, context, template) {
+    return function (writer, context, template) {
       var buffer = "";
       var token, sectionText;
 
@@ -363,9 +368,7 @@ var Mustache;
       }
 
       return buffer;
-    }
-
-    return renderFunction;
+    };
   }
 
   /**
@@ -427,7 +430,7 @@ var Mustache;
    * to a single token.
    */
   function squashTokens(tokens) {
-    var token, lastToken;
+    var token, lastToken, squashedTokens = [];
 
     for (var i = 0; i < tokens.length; ++i) {
       token = tokens[i];
@@ -435,11 +438,13 @@ var Mustache;
       if (lastToken && lastToken[0] === "text" && token[0] === "text") {
         lastToken[1] += token[1];
         lastToken[3] = token[3];
-        tokens.splice(i--, 1); // Remove this token from the array.
       } else {
         lastToken = token;
+        squashedTokens.push(token);
       }
     }
+
+    return squashedTokens;
   }
 
   function escapeTags(tags) {
@@ -460,6 +465,7 @@ var Mustache;
    * course, the default is to use mustaches (i.e. Mustache.tags).
    */
   exports.parse = function (template, tags) {
+    template = template || '';
     tags = tags || exports.tags;
 
     var tagRes = escapeTags(tags);
@@ -556,7 +562,7 @@ var Mustache;
       }
     }
 
-    squashTokens(tokens);
+    tokens = squashTokens(tokens);
 
     return nestTokens(tokens);
   };
@@ -586,6 +592,14 @@ var Mustache;
    */
   exports.compilePartial = function (name, template, tags) {
     return _writer.compilePartial(name, template, tags);
+  };
+
+  /**
+   * Compiles the given array of tokens (the output of a parse) to a reusable
+   * function using the default writer.
+   */
+  exports.compileTokens = function (tokens, template) {
+    return _writer.compileTokens(tokens, template);
   };
 
   /**
