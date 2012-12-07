@@ -17,7 +17,7 @@
   -->
     <link rel="stylesheet" href="${resource(dir: 'styles', file: 'normalize.css')}">
 		<link rel="stylesheet" href="${resource(dir: 'styles', file: 'main.css')}" >
-		<link rel="stylesheet" href="${resource(dir: 'styles', file: 'mobile.css')}" >
+    <link rel="stylesheet" href="${resource(dir: 'styles', file: 'gradient.css')}" >
 
     <meta name="description" content="ddb next">
     <meta name="viewport" content="width=device-width">

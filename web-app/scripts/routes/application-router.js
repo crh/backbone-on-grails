@@ -13,6 +13,14 @@ backboneOnGrails.Routers.AppRouter = Backbone.Router.extend({
     backboneOnGrails.Views.bookView = new backboneOnGrails.Views.BookView(
       {model: backboneOnGrails.Models.ninjaBook}
     );
+
+    var msg = '';
+    if (Modernizr.cssgradients) {
+      msg = 'Your browser has support for CSS Gradients.';
+    } else {
+      msg = 'Your browser does not support CSS Gradients.';
+    }
+    $(".container").append(msg);
   },
 
   routes: {
