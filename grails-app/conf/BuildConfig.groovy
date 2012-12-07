@@ -1,20 +1,23 @@
-grails.servlet.version = "2.5" // Change depending on target container compliance (2.5 or 3.0)
+grails.servlet.version = "3.0"
+
 grails.project.class.dir = "target/classes"
+
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
+
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+
 grails.project.war.file = "target/next.war"
+
 grails.project.dependency.resolution = {
-    // inherit Grails' default dependencies
     inherits("global") {
-        // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "debug" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-    checksums true // Whether to verify checksums on resolve
+    log "warn"
+    checksums true
     repositories {
-        inherits true // Whether to inherit repository definitions from plugins
+        inherits true
 
         grailsPlugins()
         grailsHome()
@@ -38,3 +41,5 @@ grails.project.dependency.resolution = {
         compile ':cache:1.0.0'
     }
 }
+
+grails.server.port.http=4000

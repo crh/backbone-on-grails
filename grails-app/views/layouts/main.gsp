@@ -24,9 +24,9 @@
 
     <link rel="stylesheet" href="styles/main.css">
 
-    <script src="scripts/vendor/modernizr-2.6.2.min.js"></script>
-		<g:layoutHead/>
-		<r:layoutResources />
+    <script src="components/modernizr/modernizr.js"></script>
+    <g:layoutHead/>
+    <r:layoutResources />
 	</head>
 	<body>
 		<g:layoutBody/>

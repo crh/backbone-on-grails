@@ -20,4 +20,3 @@ window.backboneOnGrails = {
 $(document).ready(function(){
   backboneOnGrails.init();
 });
-
