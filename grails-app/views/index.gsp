@@ -17,8 +17,12 @@
       <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
 
-    <header></header>
+    <header>
+      <h1>backbone, mustache, grails</h1>
+      <h2>a progressive enhancement approach</h2>
+    </header>
 
+    <div class="alert"></div>
     <div class="container">
       <g:include controller="book"/>
     </div>

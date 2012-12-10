@@ -24,9 +24,9 @@ backboneOnGrails.Views.BookView = Backbone.View.extend({
   },
 
   render: function() {
-    $('.container').append('You can see _this_ text, because' +
+    $('.alert').append('You can see _this_ text, because' +
       ' your web browser supports JavaScript. Please try to load the page ' +
-      'with JavaScript disabled');
+      'with JavaScript disabled. ');
     return this;
   }
 

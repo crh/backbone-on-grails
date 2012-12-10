@@ -13,3 +13,4 @@
 * DetailsController.groovy:7  extract the data to a file, can we use JSON string in groovy?
 * application-router.js:5  put the JSON into separate file.
 * bookDetails.mustache:1  reuse the template from book.mustache -->
+* we should _not_ maintain two separate index files, i.e. index.gsp and index.html

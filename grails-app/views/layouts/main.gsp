@@ -25,11 +25,15 @@
     <link rel="stylesheet" href="styles/main.css">
 
     <script src="components/modernizr/modernizr.js"></script>
+
+
+
     <g:layoutHead/>
     <r:layoutResources />
 	</head>
 	<body>
 		<g:layoutBody/>
 		<r:layoutResources/>
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	</body>
 </html>
